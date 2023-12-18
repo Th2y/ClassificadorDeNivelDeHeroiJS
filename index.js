@@ -1,36 +1,46 @@
 const prompt = require("prompt-sync")();
 
-const value = parseInt(prompt("Digite a quantidade de herois para calcular: "));
+class Hero {
+  constructor(name, age, type) {
+    this.name = name;
+    this.age = age;
+    this.type = type;
+  }
 
-for (let i = 0; i < value; i++){
-  console.log();
-  const wins = parseInt(prompt("Digite a quantidade de vitórias: "));
-  const losses = parseInt(prompt("Digite a quantidade de derrotas: "));
-  
-  calculateRankLevel(wins, losses);
-  
-  function calculateRankLevel(wins, losses) {
-    const winLossBalance = wins - losses;
-    let level = '';
-  
-    if (wins < 10) {
-      level = "Ferro";
-    } else if (wins >= 11 && wins <= 20) {
-      level = "Bronze";
-    } else if (wins >= 21 && wins <= 50) {
-      level = "Prata";
-    } else if (wins >= 51 && wins <= 80) {
-      level = "Ouro";
-    } else if (wins >= 81 && wins <= 90) {
-      level = "Diamante";
-    } else if (wins >= 91 && wins <= 100) {
-      level = "Lendário";
-    } else {
-      level = "Imortal";
+  attack() {
+    let attackDescription = "";
+
+    switch (this.type.toLowerCase()) {
+      case "mago":
+        attackDescription = "usou magia";
+        break;
+      case "guerreiro":
+        attackDescription = "usou espada";
+        break;
+      case "monge":
+        attackDescription = "usou artes marciais";
+        break;
+      case "ninja":
+        attackDescription = "usou shuriken";
+        break;
+      default:
+        attackDescription = "usou um ataque indefinido";
+        break;
     }
-  
-    console.log(`O Herói tem saldo de ${winLossBalance} e está no nível de ${level}`);
+
+    console.log(`O ${this.type} atacou usando ${attackDescription}`);
   }
 }
 
+const numberOfHeroes = parseInt(prompt("Digite a quantidade de heróis para calcular: "));
 
+for (let i = 0; i < numberOfHeroes; i++) {
+  console.log();
+
+  const heroName = prompt("Digite o nome do herói: ");
+  const heroAge = parseInt(prompt("Digite a idade do herói: "));
+  const heroType = prompt("Digite o tipo do herói (mago, guerreiro, monge, ninja): ").toLowerCase();
+
+  const hero = new Hero(heroName, heroAge, heroType);
+  hero.attack();
+}
